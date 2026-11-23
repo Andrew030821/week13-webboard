@@ -1,0 +1,27 @@
+<%- include('head') %>
+<div class="heading">
+  <h1><%= title %></h1>
+  <a class="button" href="/board/write">글쓰기</a>
+</div>
+<div class="table">
+  <table>
+    <thead><tr><th scope="col">번호</th><th scope="col">제목</th><th scope="col">작성자</th><th scope="col">작성일</th><th scope="col">조회</th></tr></thead>
+    <tbody>
+      <% if (!posts.length) { %>
+        <tr><td class="empty" colspan="5">등록된 글이 없습니다.</td></tr>
+      <% } %>
+      <% for (const post of posts) { %>
+        <tr><td><%= post.idx %></td><td><a href="/board/<%= post.idx %>"><%= post.title %></a></td>
+          <td><%= post.name %></td><td><%= date(post.reg_date) %></td><td><%= post.hit %></td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<% if (page > 1 || hasNext) { %>
+<nav class="pages" aria-label="게시글 페이지">
+  <% if (page > 1) { %><a href="?page=<%= page - 1 %>">이전</a><% } %>
+  <span> <%= page %> 페이지 </span>
+  <% if (hasNext) { %><a href="?page=<%= page + 1 %>">다음</a><% } %>
+</nav>
+<% } %>
+<%- include('foot') %>
