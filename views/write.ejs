@@ -1,0 +1,13 @@
+<%- include('head') %>
+<h1><%= title %></h1>
+<% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+<form method="post" action="<%= target %>" class="editor">
+  <input type="hidden" name="csrf" value="<%= csrf %>">
+  <label>제목<input name="title" required maxlength="256" value="<%= post.title || '' %>"></label>
+  <label>본문<textarea name="content" required maxlength="12000" rows="10"><%= post.content || '' %></textarea></label>
+  <div class="actions">
+    <a class="button quiet" href="<%= target.endsWith('/edit') ? target.slice(0, -5) : '/board' %>">취소</a>
+    <button>저장</button>
+  </div>
+</form>
+<%- include('foot') %>
