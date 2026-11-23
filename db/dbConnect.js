@@ -3,12 +3,25 @@ const path = require('node:path');
 
 async function connect() {
   const mysqlUrl = process.env.MYSQL_URL;
-  const postgresUrl = process.env.DATABASE_URL;
-  const userTable = mysqlUrl ? '`user`' : '"user"';
+  const { DBHOST, DBUSER, DBPASSWD, DATABASE, DBPORT, DATABASE_URL: postgresUrl } = process.env;
+  const usingClassroomSettings = [DBHOST, DBUSER, DBPASSWD, DATABASE].some(Boolean);
+  const useMySQL = Boolean(mysqlUrl) || usingClassroomSettings;
+  const userTable = useMySQL ? '`user`' : '"user"';
   let query;
 
-  if (mysqlUrl) {
-    const pool = require('mysql2/promise').createPool(mysqlUrl);
+  if (useMySQL) {
+    if (!mysqlUrl && !(DBHOST && DBUSER && DBPASSWD && DATABASE)) {
+      throw new Error('Set DBHOST, DBUSER, DBPASSWD and DATABASE together.');
+    }
+    const classroomOptions = {
+      host: DBHOST,
+      port: DBPORT ? Number(DBPORT) : 3306,
+      user: DBUSER,
+      password: DBPASSWD,
+      database: DATABASE,
+      connectionLimit: 5
+    };
+    const pool = require('mysql2/promise').createPool(mysqlUrl || classroomOptions);
     const schema = fs.readFileSync(path.join(__dirname, 'schema.mysql.sql'), 'utf8');
     for (const sql of schema.split(';').map(part => part.trim()).filter(Boolean)) {
       await pool.query(sql);
