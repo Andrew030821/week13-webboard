@@ -1,0 +1,35 @@
+:root { font-family: system-ui, "Apple SD Gothic Neo", sans-serif; color: #182d2d; background: #f5f6f2; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #19594a; text-underline-offset: .18em; }
+.site { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem max(1rem, calc((100% - 58rem) / 2)); border-bottom: 1px solid #d9e1da; background: #fff; }
+.brand { font-weight: 750; text-decoration: none; }
+.site nav, .actions, .pages { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap; }
+main { margin: 2.75rem auto; width: min(58rem, calc(100% - 2rem)); }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+h1 { font-size: clamp(1.65rem, 4vw, 2.4rem); line-height: 1.25; margin: 0 0 1rem; overflow-wrap: anywhere; }
+button, .button { display: inline-block; cursor: pointer; font: inherit; padding: .55rem 1rem; border-radius: .48rem; border: 1px solid transparent; color: white; background: #246556; text-decoration: none; white-space: nowrap; }
+.quiet { color: #19594a; background: #fff; border-color: #b5c9c1; }
+.danger { color: #a12c30; background: #fff; border-color: #eac7c7; }
+.table, article, .account { background: white; border: 1px solid #d9e1da; border-radius: .7rem; }
+.table { overflow: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 35rem; }
+th, td { text-align: left; padding: .85rem 1rem; border-bottom: 1px solid #e0e7e2; }
+th { background: #eaf1ed; }
+tr:last-child td { border-bottom: 0; }
+td:nth-child(2) { width: 45%; overflow-wrap: anywhere; }
+.empty { color: #52635e; text-align: center; padding: 2.5rem; }
+article, .account { padding: clamp(1rem, 4vw, 2rem); }
+.meta { display: flex; flex-wrap: wrap; gap: .8rem; color: #52635e; font-size: .92rem; }
+.content { border-top: 1px solid #e0e7e2; margin-top: 1.2rem; padding: 1.2rem 0; min-height: 8rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.actions, .pages { margin-top: 1rem; }
+.account, .editor { max-width: 42rem; }
+.editor { display: grid; gap: .9rem; }
+.editor small { margin-top: -.6rem; color: #52635e; }
+.editor button { justify-self: start; }
+label { font-weight: 650; }
+input:not([type=hidden]), textarea { display: block; width: 100%; margin-top: .3rem; padding: .65rem; font: inherit; font-weight: 400; border: 1px solid #b5c9c1; border-radius: .45rem; }
+textarea { resize: vertical; }
+.error { color: #a12c30; }
+.notice { color: #19594a; }
+:focus-visible { outline: 3px solid #268975; outline-offset: 3px; }
