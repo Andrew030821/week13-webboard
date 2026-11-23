@@ -1,3 +1,4 @@
+require('dotenv').config({ quiet: true });
 const crypto = require('node:crypto');
 const path = require('node:path');
 const express = require('express');
@@ -18,7 +19,8 @@ async function main() {
     await db.query('SELECT 1');
     res.type('text').send('ok');
   });
-  app.use(express.urlencoded({ extended: false, limit: '180kb' }));
+  app.use(express.json({ limit: '180kb' }));
+  app.use(express.urlencoded({ extended: true, limit: '180kb' }));
   app.use(cookieParser());
   app.use(session({
     name: 'webboard.sid',
@@ -44,7 +46,7 @@ async function main() {
 
   app.use('/users', require('./routes/users')(db));
   app.use('/board', require('./routes/board')(db));
-  app.get('/', (req, res) => res.redirect('/board'));
+  app.get('/', (req, res) => res.render('home', { title: 'My Web Board' }));
   app.use((req, res) => res.status(404).render('error', { title: '페이지를 찾을 수 없습니다', message: '주소를 확인해 주세요.' }));
   app.use((error, req, res, next) => {
     if (res.headersSent) return next(error);
