@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node --env-file-if-exists=.env index.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -11,6 +11,7 @@
   "description": "13주차 웹프로그래밍 게시판 실습",
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.10",
     "ejs": "^7.0.2",
     "express": "^5.3.0",
     "express-session": "^1.19.0",

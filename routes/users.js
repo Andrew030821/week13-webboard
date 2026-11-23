@@ -8,9 +8,9 @@ module.exports = ({ query, userTable }) => {
   const render = (req, res, register, error = '', status = 200) => {
     req.session.csrf ||= randomBytes(24).toString('hex');
     res.locals.csrf = req.session.csrf;
-    res.status(status).render('account', {
+    res.status(status).render(register ? 'register' : 'account', {
       title: register ? '회원가입' : '로그인',
-      register, error, registered: req.query.registered === '1', values: req.body || {}
+      error, registered: req.query.registered === '1', values: req.body || {}
     });
   };
 
@@ -28,7 +28,7 @@ module.exports = ({ query, userTable }) => {
     const salt = randomBytes(16).toString('hex');
     const key = await deriveKey(passwd, salt, 32);
     try {
-      await query(`INSERT INTO ${userTable} (userid, passwd, name, email) VALUES (?, ?, ?, ?)`,
+      await query(`INSERT INTO ${userTable} (userid, passwd, name, email, reg_date) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`,
         [userid, salt + ':' + key.toString('hex'), name.trim(), email]);
     } catch (error) {
       const duplicate = error.code === 'ER_DUP_ENTRY' || error.code === '23505' ||
