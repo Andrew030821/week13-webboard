@@ -1,0 +1,21 @@
+<%- include('head') %>
+<section class="account">
+  <h1><%= title %></h1>
+  <% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+  <% if (registered && !error) { %><p class="notice">회원가입이 완료되었습니다. 가입한 계정으로 로그인해 주세요.</p><% } %>
+  <form method="post" action="<%= register ? '/users/reg' : '/users/login' %>" class="editor">
+    <input type="hidden" name="csrf" value="<%= csrf %>">
+    <label>아이디<input name="userid" required maxlength="20" autocomplete="username" value="<%= values.userid || '' %>"
+      <% if (register) { %> pattern="[a-z0-9_]{3,20}" aria-describedby="userid-hint"<% } %>></label>
+    <% if (register) { %><small id="userid-hint">영문 소문자, 숫자, 밑줄 3~20자</small><% } %>
+    <label>비밀번호<input name="passwd" type="password" required maxlength="128"
+      autocomplete="<%= register ? 'new-password' : 'current-password' %>" <% if (register) { %> minlength="8" aria-describedby="password-hint"<% } %>></label>
+    <% if (register) { %>
+      <small id="password-hint">8자 이상</small>
+      <label>이름<input name="name" required maxlength="20" autocomplete="name" value="<%= values.name || '' %>"></label>
+      <label>이메일<input name="email" type="email" required maxlength="50" autocomplete="email" value="<%= values.email || '' %>"></label>
+    <% } %>
+    <button><%= title %></button>
+  </form>
+</section>
+<%- include('foot') %>
